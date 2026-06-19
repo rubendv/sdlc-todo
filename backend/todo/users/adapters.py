@@ -5,6 +5,7 @@ import typing
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.conf import settings
+from django.contrib.auth.models import Group
 
 if typing.TYPE_CHECKING:
     from allauth.socialaccount.models import SocialLogin
@@ -12,10 +13,25 @@ if typing.TYPE_CHECKING:
 
     from todo.users.models import User
 
+# Default group granting the baseline model permissions for self + own tasks.
+# Permissions are assigned to this group in a data migration (SR-5).
+DEFAULT_USER_GROUP = "users"
+
+
+def add_to_default_group(user: User) -> None:
+    group, _ = Group.objects.get_or_create(name=DEFAULT_USER_GROUP)
+    user.groups.add(group)
+
 
 class AccountAdapter(DefaultAccountAdapter):
     def is_open_for_signup(self, request: HttpRequest) -> bool:
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
+
+    def save_user(self, request, user, form, commit=True):  # noqa: FBT002
+        user = super().save_user(request, user, form, commit=commit)
+        if user.pk:
+            add_to_default_group(user)
+        return user
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
@@ -25,6 +41,12 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
         sociallogin: SocialLogin,
     ) -> bool:
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
+
+    def save_user(self, request, sociallogin, form=None):
+        user = super().save_user(request, sociallogin, form=form)
+        if user.pk:
+            add_to_default_group(user)
+        return user
 
     def populate_user(
         self,

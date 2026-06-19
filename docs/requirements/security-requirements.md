@@ -30,7 +30,7 @@ See [access-control.md](../threat-model/access-control.md).
 | ID | Requirement | Ref |
 |----|-------------|-----|
 | SR-10 | All DB access via the ORM / parameterized queries; input validated by DRF serializers; no raw SQL. (scaffold ✅) | B1 Tampering → D1 |
-| SR-12 | CORS restricted to the API path and the trusted frontend origin(s). (scaffold ✅ path; origins TBD) | B1 Info disclosure → D1 |
+| SR-12 | CORS is **not** used. The frontend is served same-origin via the reverse proxy, so the API needs no cross-origin access; `corsheaders` is removed. A permissive or reflected CORS policy is a known disclosure vector (CWE-942). | B1 Info disclosure → D1 |
 
 ## Secrets & supply chain
 

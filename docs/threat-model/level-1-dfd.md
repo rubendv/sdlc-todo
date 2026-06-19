@@ -85,4 +85,5 @@ DB, or cache, and vice versa — but these are only in play once an attacker is 
 
 ## Open
 
-- Where the Frontend SPA is served from (WhiteNoise vs separate host) — TBD when frontend lands.
+- Frontend served **same-origin** behind the reverse proxy (no CORS). Build/serving details TBD when
+  the frontend lands.

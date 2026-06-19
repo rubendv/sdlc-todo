@@ -18,9 +18,13 @@ Mitigation status reflects what the cookiecutter-django scaffold already provide
 | Spoofing | An attacker could impersonate a legitimate user in order to act on their behalf, leading to exposure of that user's data. | **Partial** — allauth auth flows + mandatory email verification, Argon2 hashing, secure/HttpOnly cookies, TLS+HSTS, default allauth login rate-limits. *Open: MFA not enforced; no throttling on API/token auth.* | D1 |
 | Tampering | An attacker could manipulate requests or stored data in order to subvert intended behavior, leading to unauthorized access to data. | **Partial** — ORM (parameterized queries), CSRF protection, DRF serializer validation, TLS. *Open: object-level authorization — access-control architecture undecided.* | D1 (→ D2 if it yields system control) |
 | Repudiation | An attacker could act without leaving a reliable trace in order to conceal their activity, leading to a breach that cannot be detected or scoped. | **Open** — only basic request/error logging; no audit trail of user/admin actions (Sentry off). | D1 |
-| Information disclosure | An attacker could obtain data they are not authorized to see in order to harvest sensitive information, leading to exposure of user data. | **Partial** — DEBUG off in prod, `IsAuthenticated` default, CORS scoped to `/api/`, TLS. *Open: per-user query scoping / object-level authorization undecided.* | D1 |
+| Information disclosure | An attacker could obtain data they are not authorized to see in order to harvest sensitive information, leading to exposure of user data. | **Partial** — DEBUG off in prod, `IsAuthenticated` default, no CORS (frontend same-origin via the proxy), TLS. *Open: per-user query scoping / object-level authorization undecided.* | D1 |
 | Denial of service | An attacker could exhaust system resources in order to make the service unavailable, leading to downtime that drives users away. | **Open** — no app-level throttling/rate limits or resource quotas. | D3 |
 | Elevation of privilege | An attacker could gain more privilege than intended in order to bypass access controls, leading to broad access to user data. | **Partial** — `SECRET_KEY` via env, randomized admin URL, DEBUG off, `IsAuthenticated` default. *Open: authorization/role model undecided.* | D1 (→ D2 if it yields system control) |
+
+> **Decision — no CORS.** The reverse proxy serves the frontend same-origin, so the API needs no
+> cross-origin access. A permissive or reflected CORS policy (CWE-942) is a disclosure vector (D1);
+> `corsheaders` is removed rather than configured.
 
 ## B2 — Build/deploy (supply chain)
 

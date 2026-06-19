@@ -63,6 +63,12 @@ scenario it guards. Keep these green in review and in tests.
 - Rotate the session on login; expire/revoke tokens on password change and logout (see
   [access-control](../threat-model/access-control.md) → To decide).
 
+## 11. Cross-origin policy — CWE-942 (D1)
+
+- Do not enable CORS. The frontend is served same-origin via the reverse proxy; `corsheaders` stays removed.
+- If a cross-origin client is ever genuinely needed: allowlist exact origins, never reflect the
+  `Origin` header, and never combine `Access-Control-Allow-Origin: *` with credentials.
+
 ---
 
 Parked: file-upload handling (CWE-22 / CWE-434) — no uploads in the MVP.
