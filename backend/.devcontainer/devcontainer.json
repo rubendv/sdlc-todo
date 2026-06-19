@@ -2,7 +2,7 @@
 {
     "name": "todo_dev",
     "dockerComposeFile": [
-        "../docker-compose.local.yml"
+        "../../docker-compose.local.yml"
     ],
     "init": true,
     "mounts": [

@@ -9,7 +9,7 @@ volumes:
 services:
   django:
     build:
-      context: .
+      context: ./backend
       dockerfile: ./compose/production/django/Dockerfile
 
     image: todo_production_django
@@ -19,24 +19,24 @@ services:
       - postgres
       - redis
     env_file:
-      - ./.envs/.production/.django
-      - ./.envs/.production/.postgres
+      - ./backend/.envs/.production/.django
+      - ./backend/.envs/.production/.postgres
     command: /start
 
   postgres:
     build:
-      context: .
+      context: ./backend
       dockerfile: ./compose/production/postgres/Dockerfile
     image: todo_production_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/18/docker
       - production_postgres_data_backups:/backups
     env_file:
-      - ./.envs/.production/.postgres
+      - ./backend/.envs/.production/.postgres
 
   traefik:
     build:
-      context: .
+      context: ./backend
       dockerfile: ./compose/production/traefik/Dockerfile
     image: todo_production_traefik
     depends_on:
@@ -53,7 +53,7 @@ services:
 
   nginx:
     build:
-      context: .
+      context: ./backend
       dockerfile: ./compose/production/nginx/Dockerfile
     image: todo_production_nginx
     depends_on:
