@@ -7,9 +7,12 @@ an initial implementation of the **core functionality**. We iterate per aspect l
 
 - Core task tracking: accounts + CRUD on own tasks.
 - The access-control and baseline security controls already established in the threat model.
+- Runs **locally in a debug-enabled environment** — a good basis to build on, not production.
 
 ## Out of scope (this iteration)
 
+- **Production settings / hardening** (TLS, HSTS, secure cookies, `DEBUG=False`, prod secrets) —
+  not deploying anytime soon; local debug first.
 - **Denial-of-service mitigations** (rate limiting, quotas) — D3 / STRIDE DoS.
 - **Non-repudiation** (audit logging) — STRIDE Repudiation.
 - Other deferred items tracked in [open risks](../threat-model/stride-analysis.md): MFA enforcement,
@@ -19,6 +22,7 @@ an initial implementation of the **core functionality**. We iterate per aspect l
 
 - [functional-requirements.md](functional-requirements.md)
 - [security-requirements.md](security-requirements.md)
+- [testing-strategy.md](testing-strategy.md)
 
 Sources: [doomsday-scenarios](../threat-model/doomsday-scenarios.md),
 [stride-analysis](../threat-model/stride-analysis.md),
