@@ -46,6 +46,52 @@ Config-level SRs (SR-2, SR-10, SR-13–15) are provided by the scaffold; assert 
 via settings tests (e.g. Argon2 first hasher) rather than heavy unit tests. Tests run against the
 debug/test settings — production SRs (SR-4, SR-11) are deferred.
 
+## CWE coverage
+
+The [CWE shortlist](../threat-model/attack-trees.md) and [secure coding guidelines](secure-coding-guidelines.md)
+are enforced by a mix of tests, static analysis, and review. Authorization CWEs are business logic and
+stay owned by tests + review; SAST owns the mechanical ones.
+
+| CWE | Primary control |
+|-----|-----------------|
+| 639 / 862 — object-level authz | Custom SAST rules (owner-scoped `get_queryset`, `IsOwner` present) + negative tests (SR-6); residual logic to review |
+| 285 / 863 — function-level authz | Custom SAST rules (no `AllowAny`, perms set) + tests (SR-5) |
+| 915 — mass assignment | Tests (SR-8) + SAST (`fields = "__all__"`, missing `read_only`) |
+| 200 / 209 — data/error exposure | Tests + review; SAST flags `DEBUG`, `__all__` serializers |
+| 89 — SQL injection | SAST (raw / `.extra` / string SQL) + review |
+| 79 — stored XSS | SAST (`mark_safe`, `\|safe`) + frontend review |
+| 502 — deserialization | SAST (`pickle`, `yaml.load`) |
+| 78 — command injection | SAST (`shell=True`, `os.system`) |
+| 918 — SSRF | Review (no server-side fetch in MVP) |
+| 287 / 384 / 613 — auth/session | Review (use allauth; no custom auth) |
+
+## SAST requirements
+
+We already run **Ruff's `S` (Bandit) rules** in pre-commit, covering the mechanical Python CWEs (78,
+502, raw-SQL patterns) plus `detect-private-key`. That leaves framework- and project-specific rules. A
+SAST tool we adopt must:
+
+1. Be **Python + Django/DRF aware**, not generic Python only.
+2. Detect the mechanical shortlist CWEs — 89, 79 (`mark_safe`), 502, 78, 915 (`fields="__all__"`) —
+   plus `DEBUG=True` and `AllowAny`.
+3. Support **custom rules**, to encode our conventions: a viewset must override an owner-scoped
+   `get_queryset`; object views must set `IsOwner`; serializers must not use `__all__` and must mark
+   privilege fields `read_only`. This is the only way SAST touches the authz CWEs.
+4. Run **locally and in pre-commit**, failing on findings; wire into CI when one exists.
+5. Allow **inline suppression with a written justification**, and keep false positives manageable.
+6. Be **OSS / no paid license**, installed only with approval (project rule).
+
+With **custom rules tailored to our app**, SAST can verify most of the authorization conventions
+structurally: owner-scoped `get_queryset`, `IsOwner` on object views, no `fields="__all__"`, privilege
+fields `read_only`, no `AllowAny`. That covers the bulk of CWE-639/862/285/863 at the convention level.
+
+What custom rules can't catch is deeper semantic correctness — e.g. a `get_queryset` that is overridden
+but scopes to the wrong field. **We accept the risk** of not having automatic SAST for that residual for
+now, and keep it under manual review (plus the negative tests above). Revisit as the custom rules mature.
+
+Candidates to evaluate later (not a decision): **Semgrep** (Django/DRF rulesets + custom rules — meets
+req 3), standalone **Bandit** (overlaps Ruff `S`), **CodeQL** (deep dataflow for 89 / 918).
+
 ## Test data
 
 `factory-boy`: reuse `UserFactory` (exists); add `TaskFactory` (`owner = SubFactory(UserFactory)`).

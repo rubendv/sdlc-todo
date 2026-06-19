@@ -22,6 +22,7 @@ an initial implementation of the **core functionality**. We iterate per aspect l
 
 - [functional-requirements.md](functional-requirements.md)
 - [security-requirements.md](security-requirements.md)
+- [secure-coding-guidelines.md](secure-coding-guidelines.md)
 - [testing-strategy.md](testing-strategy.md)
 
 Sources: [doomsday-scenarios](../threat-model/doomsday-scenarios.md),

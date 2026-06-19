@@ -40,6 +40,9 @@ Where a risk is really a tree of paths, decompose before rating (e.g. via MITRE 
 - **B1 Spoofing + Elevation** — account takeover.
 - **B2 Spoofing + Tampering** — supply-chain compromise.
 
+See [attack-trees.md](attack-trees.md) — trees for the critical risks (D1, D2), decomposed into
+coding mistakes and a CWE shortlist.
+
 ## Open risks — mitigations still to develop
 
 The outcome of this pass. Ordered roughly by priority.
