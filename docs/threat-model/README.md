@@ -16,5 +16,5 @@ High-level threat model, written before implementation so security shapes the de
 1. Doomsday scenarios — [doomsday-scenarios.md](doomsday-scenarios.md) *(done)*
 2. Trust boundaries & data-flow — [context-diagram.md](context-diagram.md), [level-1-dfd.md](level-1-dfd.md) *(done)*
 3. Threat enumeration — STRIDE / attack trees — [stride-analysis.md](stride-analysis.md) *(in progress: perimeter boundaries)*
-4. Mitigations & controls
+4. Mitigations & controls — [access-control.md](access-control.md) *(in progress: access control / open risk #1)*
 5. Residual risk & decisions
