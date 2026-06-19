@@ -47,5 +47,7 @@ modeling gap to fill, not a judgment that the risk is absent.
   provider, reverse proxy) and add the host as a DFD element.
 - **Dependency vulnerability monitoring** — known-CVE / SCA tracking to complement provenance
   (RR-9–RR-11). (D2)
+- **Risk rating** — assign likelihood and impact (and a resulting priority) to the threats and the
+  [risk register](risk-register.md) entries; they are currently unrated.
 
 The current STRIDE covers only the two perimeter boundaries; the rest is backlog.
