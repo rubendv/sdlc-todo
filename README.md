@@ -1,11 +1,13 @@
 # Todo
 
 A small todo application built as a **reference implementation of a secure SDLC**: the security work
-drives the design before any feature code is written. It is a worked example, not a product.
+drives the design before any feature code is written. It is a worked example, not a product. The aim
+is for it to eventually show what a well-developed SDLC looks like in practice.
 
-> **Work in progress.** Local, debug-only, MVP core; not production-ready. This is a first pass to
-> show the approach. The writing still needs an editing pass to remove the "AI slop" feel, especially
-> in the docs. It will improve over time.
+> **Work in progress.** Built in roughly 8 hours on a free day. Local, debug-only, MVP core; not
+> production-ready. The code and the correctness of the security analysis have **not** been thoroughly
+> reviewed yet, and the writing still needs an editing pass to remove the "AI slop" feel. Treat it as
+> an early first pass, not the finished example it is meant to become.
 
 ## The story so far
 
