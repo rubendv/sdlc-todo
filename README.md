@@ -97,8 +97,13 @@ Needs Docker with the compose plugin.
 ```
 docker compose -f docker-compose.local.yml up --build
 # API at http://localhost:8000, captured email at http://localhost:8025
-just pytest    # run the test suite
+
+# run the test suite (from another shell)
+docker compose -f docker-compose.local.yml run --rm django pytest
 ```
+
+The `justfile` provides shortcuts like `just up` and `just pytest` if you have
+[`just`](https://just.systems) installed.
 
 ## Built with AI, steered by a human
 
