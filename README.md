@@ -54,6 +54,7 @@ just pytest    # run the test suite
 
 - Threat model: [docs/threat-model/](docs/threat-model/README.md)
 - Requirements: [docs/requirements/](docs/requirements/README.md)
+- Governance: [docs/governance/](docs/governance/README.md)
 - Articles: [docs/articles/](docs/articles/)
 
 ## Built with AI, steered by a human
