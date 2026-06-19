@@ -27,7 +27,7 @@ Operations and Deployment are near zero because there is no production yet.
 
 | Practice | Score | Basis |
 |----------|:---:|-------|
-| Secure Build | 1 | Reproducible Docker build, hash-pinned dependencies (`uv.lock`), SAST (ruff/bandit) in pre-commit. No SBOM or signed artifacts (RR-9/10). |
+| Secure Build | 1 | Reproducible Docker build, hash-pinned dependencies (`uv.lock`), basic security linting (ruff/bandit rules) in pre-commit — not a proper SAST tool yet (RR-2). No SBOM or signed artifacts (RR-9/10). |
 | Secure Deployment | 0 | No deployment process or CI/CD; production deferred (RR-5). |
 | Defect Management | 1 | Risks tracked in a register with triggers; no defect/vuln intake or metrics. |
 
@@ -37,7 +37,7 @@ Operations and Deployment are near zero because there is no production yet.
 |----------|:---:|-------|
 | Architecture Assessment | 1 | Critical review of the threat model done; gaps backlogged. Not yet systematic per change. |
 | Requirements-driven Testing | 2 | Positive + negative tests mapped to every in-scope requirement (coverage matrix). |
-| Security Testing | 1 | SAST in pre-commit; SAST requirements + custom-rule plan defined. No DAST or pentest. ASVS not yet reviewed (RR-6). |
+| Security Testing | 1 | Basic security linting in pre-commit; a proper SAST tool is specified but not set up (RR-2). No DAST or pentest. ASVS not yet reviewed (RR-6). |
 
 ## Operations
 

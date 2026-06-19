@@ -32,7 +32,8 @@ Scope: this repository. Owner: the operator (solo), who reviews all AI-assisted 
 
 - Security-relevant changes ship with positive **and** negative tests; update the
   [coverage matrix](../requirements/test-coverage.md).
-- SAST (ruff incl. bandit rules) must pass before commit.
+- The security linter (ruff incl. bandit rules) must pass before commit. A proper SAST tool is not set
+  up yet (RR-2).
 - Re-review the threat model when the architecture or trust boundaries change.
 
 **Governance** (Policy & Compliance / Defect Management)
@@ -43,7 +44,7 @@ Scope: this repository. Owner: the operator (solo), who reviews all AI-assisted 
 
 ## Gates
 
-- **Commit:** SAST passes; tests pass; rationale in the message.
+- **Commit:** the security linter passes; tests pass; rationale in the message.
 - **Feature-complete:** requirements traced and tested; coverage matrix current; new risks registered.
 - **Before production deployment:** resolve all production-gated risks in the risk register, complete
   the threat-model backlog items that feed D1, stand up the Operations practices (incident response,

@@ -50,7 +50,11 @@ debug/test settings — production SRs (SR-4, SR-11) are deferred.
 
 The [CWE shortlist](../threat-model/attack-trees.md) and [secure coding guidelines](secure-coding-guidelines.md)
 are enforced by a mix of tests, static analysis, and review. Authorization CWEs are business logic and
-stay owned by tests + review; SAST owns the mechanical ones.
+stay owned by tests + review; the mechanical ones are intended for SAST.
+
+> **SAST is planned, not in place.** No proper SAST tool is set up yet — only a basic security linter
+> (Ruff's `S` / Bandit rules) that catches a few of the mechanical items below. Until a real SAST tool
+> and the custom rules exist (RR-2), every row relies on that linter, the tests, and manual review.
 
 | CWE | Primary control |
 |-----|-----------------|
@@ -67,9 +71,10 @@ stay owned by tests + review; SAST owns the mechanical ones.
 
 ## SAST requirements
 
-We already run **Ruff's `S` (Bandit) rules** in pre-commit, covering the mechanical Python CWEs (78,
-502, raw-SQL patterns) plus `detect-private-key`. That leaves framework- and project-specific rules. A
-SAST tool we adopt must:
+A basic security linter (**Ruff's `S` / Bandit rules**) runs in pre-commit and catches a few mechanical
+issues (e.g. `shell=True`, `pickle`) plus `detect-private-key`. That is **not** a proper SAST tool, and
+we have **not set one up yet** (RR-2). The rest of this section is the requirements for the SAST tool we
+will adopt; it must:
 
 1. Be **Python + Django/DRF aware**, not generic Python only.
 2. Detect the mechanical shortlist CWEs — 89, 79 (`mark_safe`), 502, 78, 915 (`fields="__all__"`) —
@@ -81,13 +86,13 @@ SAST tool we adopt must:
 5. Allow **inline suppression with a written justification**, and keep false positives manageable.
 6. Be **OSS / no paid license**, installed only with approval (project rule).
 
-With **custom rules tailored to our app**, SAST can verify most of the authorization conventions
-structurally: owner-scoped `get_queryset`, `IsOwner` on object views, no `fields="__all__"`, privilege
-fields `read_only`, no `AllowAny`. That covers the bulk of CWE-639/862/285/863 at the convention level.
+Once set up with **custom rules tailored to our app**, SAST would verify most of the authorization
+conventions structurally: owner-scoped `get_queryset`, `IsOwner` on object views, no `fields="__all__"`,
+privilege fields `read_only`, no `AllowAny` — covering the bulk of CWE-639/862/285/863 at the convention
+level. None of that is built yet (RR-2); for now those conventions are held by the tests and review.
 
-What custom rules can't catch is deeper semantic correctness — e.g. a `get_queryset` that is overridden
-but scopes to the wrong field. **We accept the risk** of not having automatic SAST for that residual for
-now, and keep it under manual review (plus the negative tests above). Revisit as the custom rules mature.
+Even with custom rules, deeper semantic correctness — e.g. a `get_queryset` overridden but scoped to the
+wrong field — would stay out of reach and on manual review.
 
 Candidates to evaluate later (not a decision): **Semgrep** (Django/DRF rulesets + custom rules — meets
 req 3), standalone **Bandit** (overlaps Ruff `S`), **CodeQL** (deep dataflow for 89 / 918).
