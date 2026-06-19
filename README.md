@@ -90,7 +90,8 @@ todo/
 ```
 
 ## Run locally
-
+It's not really doing much yet, just a REST API backend.
+Stay tuned until it has a proper frontend.
 Needs Docker with the compose plugin.
 
 ```
