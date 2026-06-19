@@ -47,18 +47,7 @@ Where a risk is really a tree of paths, decompose before rating (e.g. via MITRE 
 See [attack-trees.md](attack-trees.md) — trees for the critical risks (D1, D2), decomposed into
 coding mistakes and a CWE shortlist.
 
-## Open risks — mitigations still to develop
+## Open risks
 
-The outcome of this pass. Ordered roughly by priority.
-
-1. **Access-control architecture** — object-level authorization, per-user query scoping, role model
-   (B1 Tampering / Information disclosure / Elevation). *Biggest gap — drives D1.*
-2. **MFA enforcement** decision (B1 Spoofing).
-3. **Brute-force protection** beyond allauth defaults — API/token throttling, lockout (B1 Spoofing).
-4. **Application-level rate limiting / DoS controls** (B1 Denial of service → D3).
-5. **Security audit logging** of user/admin actions (B1 Repudiation).
-6. **Supply-chain provenance** — SBOM + commit/artifact signing (B2 Repudiation).
-7. **Base image digest pinning** + image verification (B2 Tampering).
-8. **Dependency source/provenance policy** beyond hashes (B2 Spoofing).
-9. **Production secret-management strategy** + build-time secret scanning (B2 Information disclosure).
-10. **CI/CD security** — least-privilege pipeline, build availability — once a pipeline exists (B2 DoS / Elevation).
+The mitigations identified by this analysis are tracked in the [risk register](risk-register.md),
+alongside the accepted residual risks.
