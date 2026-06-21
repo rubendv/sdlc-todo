@@ -11,7 +11,10 @@ Risks are kept generic — *An attacker could `<action>` in order to `<goal>`, l
 Mitigation status reflects what the cookiecutter-django scaffold already provides:
 **Handled** · **Partial** (some coverage, gap remains) · **Open** (not handled) · **N/A yet**.
 
-TODO: the STRIDE analysis here is very shallow. We need to handle both sides of the data flow and the data flow itself. We will likely need to create separate files per trust boundary to keep things maintainable, maybe even in some machine readable format like YAML so we can use scripts to manage them.
+> **Being migrated.** Deeper STRIDE-per-element analyses now live in [`stride/`](stride/) — one
+> machine-readable YAML file per trust boundary, applying STRIDE per element (process, data flow, and
+> the other end), see the [format](stride/README.md). First done: [User ↔ API](stride/user-api.yaml).
+> The shallow tables below will move there boundary by boundary.
 
 ## B1 — Internet ↔ edge (API perimeter)
 

@@ -1,0 +1,182 @@
+schema: stride-boundary/v1
+
+boundary:
+  id: user-api
+  name: User ↔ API
+  summary: >-
+    The Internet perimeter (B1 in the DFD). Untrusted requests cross from an end user into the Todo
+    REST API. TLS terminates at the reverse proxy in front of the API; the frontend is served
+    same-origin, so there is no CORS.
+  left: { id: api, name: Todo API, type: process }
+  right: { id: user, name: User, type: external_entity }
+  flow:
+    id: api-traffic
+    name: API request/response
+    summary: >-
+      HTTPS requests from the user (via the browser/SPA) to the API, and the responses back.
+
+analyses:
+  # ----- Left element: the API process (full STRIDE) -----------------------------------------
+  - target: api
+    type: process
+    threats:
+      - id: user-api/api/S
+        category: spoofing
+        threat: >-
+          An attacker could present stolen credentials, a stolen session cookie, or a stolen API
+          token to the API in order to be accepted as another user, leading to access to that user's
+          data.
+        dds: [D1]
+        mitigation:
+          status: partial
+          notes: >-
+            allauth authentication with mandatory email verification; Argon2 password hashing; signed
+            HttpOnly session cookies; DRF session + token auth. Gaps: MFA available but not enforced
+            (RR-7); no brute-force throttling on the API/token paths (RR-8); TLS/HSTS only in
+            production (RR-5).
+        refs: [RR-5, RR-7, RR-8]
+
+      - id: user-api/api/T
+        category: tampering
+        threat: >-
+          An attacker could send crafted input or manipulated record identifiers in order to write
+          data they should not, leading to corruption of or unauthorized writes to another user's
+          records.
+        dds: [D1]
+        mitigation:
+          status: partial
+          notes: >-
+            Django ORM (parameterized queries) blocks SQL injection; DRF serializers validate input
+            and use explicit field allow-lists; object-level ownership is enforced (per-user
+            get_queryset + IsOwner) with the owner set server-side; the mass-assignment guard keeps
+            owner and privilege fields read-only. Gap: no proper SAST yet to enforce these
+            conventions in code (RR-2).
+        refs: [RR-2, CWE-89, CWE-639, CWE-915]
+
+      - id: user-api/api/R
+        category: repudiation
+        threat: >-
+          An attacker (or user) could perform actions through the API in order to later deny them,
+          leading to a breach or abuse that cannot be attributed or reconstructed.
+        dds: [D1]
+        mitigation:
+          status: open
+          notes: >-
+            Only basic request/error logging; no security audit log of user or admin actions (RR-4).
+        refs: [RR-4]
+
+      - id: user-api/api/I
+        category: information_disclosure
+        threat: >-
+          An attacker could request records or read responses in order to obtain data they are not
+          authorized to see, leading to disclosure of another user's data.
+        dds: [D1]
+        mitigation:
+          status: partial
+          notes: >-
+            IsAuthenticated by default and view_* permission required even on reads; per-user
+            get_queryset scoping; serializers expose explicit fields only; DEBUG off in production; no
+            CORS (same-origin). Gaps: verbose error pages if DEBUG is ever on outside local (RR-5).
+        refs: [RR-5, CWE-200, CWE-209, CWE-639]
+
+      - id: user-api/api/D
+        category: denial_of_service
+        threat: >-
+          An attacker could send expensive or high-volume requests in order to exhaust the API's
+          resources, leading to downtime that drives users away.
+        dds: [D3]
+        mitigation:
+          status: open
+          notes: >-
+            No application-level rate limiting, quotas, or pagination on list endpoints (RR-3).
+        refs: [RR-3]
+
+      - id: user-api/api/E
+        category: elevation_of_privilege
+        threat: >-
+          An attacker could exploit weak authorization in order to act with more privilege than
+          granted, leading to access to other users' or admin data.
+        dds: [D1, D2]
+        mitigation:
+          status: partial
+          notes: >-
+            Function-level model permissions (including view) plus object-level IsOwner; the
+            mass-assignment guard prevents setting is_staff/is_superuser/owner; admins get no API
+            bypass; SECRET_KEY from the environment; randomized admin URL; DEBUG off in production.
+            Gap: MFA not enforced (RR-7).
+        refs: [RR-7]
+
+  # ----- The data flow (T, I, D) -------------------------------------------------------------
+  - target: flow
+    type: data_flow
+    threats:
+      - id: user-api/flow/T
+        category: tampering
+        threat: >-
+          A network attacker could modify requests or responses in transit in order to alter data or
+          behavior, leading to unauthorized changes or injected content.
+        dds: [D1]
+        mitigation:
+          status: partial
+          notes: >-
+            TLS terminates at the reverse proxy in production, with HSTS, protecting integrity in
+            transit. Gaps: production TLS not yet configured/reviewed (RR-5); local runs over plain
+            HTTP by design (local-only).
+        refs: [RR-5]
+
+      - id: user-api/flow/I
+        category: information_disclosure
+        threat: >-
+          A network attacker could eavesdrop on the connection in order to read traffic, leading to
+          disclosure of credentials, tokens, or user data.
+        dds: [D1]
+        mitigation:
+          status: partial
+          notes: >-
+            TLS in production. Gaps: production TLS/HSTS not yet configured (RR-5); local is plain
+            HTTP by design.
+        refs: [RR-5]
+
+      - id: user-api/flow/D
+        category: denial_of_service
+        threat: >-
+          A network attacker could flood the connection in order to saturate it, leading to downtime.
+        dds: [D3]
+        mitigation:
+          status: open
+          notes: >-
+            No network-level rate limiting or DoS protection configured; would rely on the reverse
+            proxy or infrastructure later (RR-3).
+        refs: [RR-3]
+
+  # ----- Right element: the User (external entity → S, R only) -------------------------------
+  - target: user
+    type: external_entity
+    threats:
+      - id: user-api/user/S
+        category: spoofing
+        threat: >-
+          An attacker could take over a user's identity (phished or reused password, stolen
+          session/token, or a flawed password reset) in order to impersonate them, leading to access
+          to their data.
+        dds: [D1]
+        mitigation:
+          status: partial
+          notes: >-
+            allauth login with mandatory email verification, Argon2 hashing, and default allauth
+            login rate-limits. Gaps: MFA not enforced (RR-7); no throttling on API/token paths
+            (RR-8); password-reset and verification flows rely on allauth's own tests for now and
+            will be tested before production (RR-1).
+        refs: [RR-1, RR-7, RR-8]
+
+      - id: user-api/user/R
+        category: repudiation
+        threat: >-
+          A user could deny having performed an action, and the system could not prove otherwise,
+          leading to unresolvable disputes or abuse that cannot be scoped.
+        dds: [D1]
+        mitigation:
+          status: open
+          notes: >-
+            No audit log of user actions (RR-4).
+        refs: [RR-4]

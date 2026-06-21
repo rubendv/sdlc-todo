@@ -58,7 +58,7 @@ An SDLC follows a certain natural order. I've chosen to start in a small, agile 
 
 You can follow this using the [articles](docs/articles/) (WIP, LLM drafts), or dive into the actual [work documents](#explore-the-docs) that contain the results of each activity so far.
 
-## Current focus 
+## Current focus
 In the current iteration we are aiming for:
 - Minimal local debug setup and functional core of the backend API.
 - Reviewing and rewriting LLM contributions.

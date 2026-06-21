@@ -1,7 +1,7 @@
 volumes:
   todo_local_postgres_data: {}
   todo_local_postgres_data_backups: {}
-  
+
 
 services:
   django:

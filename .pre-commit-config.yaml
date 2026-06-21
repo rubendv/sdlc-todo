@@ -1,9 +1,12 @@
-exclude: '^docs/|/migrations/|devcontainer.json'
+# Monorepo pre-commit config (repo root).
+# Django hooks are scoped to backend/; repo-wide hooks (whitespace, yaml, keys)
+# run everywhere except the backend Sphinx docs and migrations.
+exclude: '^backend/docs/|/migrations/|devcontainer.json'
 default_stages: [pre-commit]
 minimum_pre_commit_version: "3.2.0"
 
 default_language_version:
-  python: python3.14
+  python: python3.12
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -27,6 +30,7 @@ repos:
     hooks:
       - id: django-upgrade
         args: ['--target-version', '6.0']
+        files: ^backend/
 
   # Run the Ruff linter.
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -35,19 +39,36 @@ repos:
       # Linter
       - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
+        files: ^backend/
       # Formatter
       - id: ruff-format
+        files: ^backend/
 
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: v2.24.1
     hooks:
       - id: pyproject-fmt
+        files: '^backend/pyproject\.toml$'
 
   - repo: https://github.com/djlint/djLint
     rev: v1.39.2
     hooks:
       - id: djlint-reformat-django
+        files: ^backend/
       - id: djlint-django
+        files: ^backend/
+
+  # Local hooks (repo-wide tooling).
+  - repo: local
+    hooks:
+      - id: validate-stride
+        name: Validate STRIDE YAML
+        entry: python scripts/validate_stride.py
+        language: python
+        language_version: python3
+        additional_dependencies: ["pyyaml>=6"]
+        files: '^docs/threat-model/stride/.*\.ya?ml$'
+        pass_filenames: true
 
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
 ci:
