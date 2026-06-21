@@ -1,6 +1,6 @@
 # Governance for a project of one
 
-*Draft.*
+*LLM Draft. Placeholder until I rewrite in my own voice*
 
 By this point the project had a threat model, security requirements, a test suite mapped to those
 requirements, and a register of known risks. Good artifacts. But they existed because I happened to do

@@ -1,6 +1,6 @@
 # Turning the threat model into a tested API
 
-*Draft.*
+*LLM Draft. Placeholder until I rewrite in my own voice*
 
 The earlier posts covered the planning: the worst-case outcomes, the threat model, the requirements,
 and the testing strategy. This one is about the code. I built the core of the todo app — the tasks and

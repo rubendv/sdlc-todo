@@ -1,6 +1,6 @@
 # Building a secure app with an LLM while keeping oversight
 
-*Draft.*
+*LLM Draft. Placeholder until I rewrite in my own voice*
 
 I run security programs for clients. The advice rarely changes: build security into the process of
 making software (the software development life cycle, or SDLC) from the start, so good security falls

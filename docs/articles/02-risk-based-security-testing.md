@@ -1,6 +1,6 @@
 # Risk-based security testing: let the threat model choose what to test
 
-*Draft.*
+*LLM Draft. Placeholder until I rewrite in my own voice*
 
 Most security testing plans I see start from a generic list: the OWASP Top 10, the CWE Top 25, a
 scanner's default rules. (A CWE, Common Weakness Enumeration, is just a numbered catalog of types of

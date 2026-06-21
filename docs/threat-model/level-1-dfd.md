@@ -3,6 +3,8 @@
 Decomposes the monolithic `Todo` process from the [context diagram](context-diagram.md) into its
 component processes, data stores, and the external entities they exchange data with.
 
+TODO: this diagram is very messy. We need to clean it up.
+
 ```mermaid
 flowchart TB
     %% external entities
@@ -59,6 +61,8 @@ flowchart TB
 | 4.0 | Static asset serving (WhiteNoise) | Serves Django/DRF static assets |
 
 ## Data stores
+
+TODO: these D1, D2 etc overlap with the doomsday scenario IDs.
 
 | # | Store | Holds |
 |---|-------|-------|

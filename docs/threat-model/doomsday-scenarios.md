@@ -1,7 +1,6 @@
 # Doomsday Scenarios
 
-Three catastrophic outcomes, ranked. Every threat and control in this model traces back to
-preventing one of them.
+Three catastrophic outcomes, every security activity is aimed at preventing these scenarios from happening or reducing their impact if they do happen.
 
 ## D1 — Disclosure of user data
 
