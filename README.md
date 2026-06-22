@@ -1,6 +1,6 @@
 # Todo
 
-I (Ruben De Visscher) am a product security consultant. I created this repository to have a small, practical example of how to approach secure sofware development. Many developers are looking for practical advice or examples to form their mental model of how to accomplish pretty much anything in software development. This repo is my attempt to provide that for software security.
+I am a product security consultant. I created this repository to have a small, practical example of how to approach secure sofware development. Many developers are looking for practical advice or examples to form their mental model of how to accomplish pretty much anything in software development. This repo is my attempt to provide that for software security.
 
 Before I switched to full-time security consulting, I worked as a software engineer on the backend of products where security was a major focus. This was before the time of AI coding. Creating this example application is also my way of familiarizing myself with the AI coding tools that are an important part of modern software development, so I do not end up as a dinosaur stuck in my old ways.
 
