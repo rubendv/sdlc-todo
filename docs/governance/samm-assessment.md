@@ -2,7 +2,7 @@
 
 > **Example prompt:** *"Do a basic OWASP SAMM v2 self-assessment. Input: the whole repository and its docs. Ask a developer about practices not visible in the repo — CI/CD, deployment, operations, incident response — and don't assume their maturity. Output: a Markdown table scoring each of the fifteen SAMM practices 0–3 with a one-line justification, plus a short summary of the strong and weak areas and the targets."*
 
-Basic self-assessment against [SAMM v2](https://owaspsamm.org), as of 2026-06-19. One maturity score
+Basic self-assessment against [SAMM v2](https://owaspsamm.org), as of 2026-06-25. One maturity score
 per practice (0–3): 0 none · 1 ad hoc/basic · 2 structured/repeatable · 3 measured/optimized. SAMM
 scores two streams per practice; this is simplified to one score per practice for a first pass.
 
@@ -14,7 +14,7 @@ Operations and Deployment are near zero because there is no production yet.
 | Practice | Score | Basis |
 |----------|:---:|-------|
 | Strategy & Metrics | 0 | No security strategy, roadmap, or metrics. |
-| Policy & Compliance | 1 | GDPR applicability identified; SDLC policy defined from this assessment. No compliance verification. |
+| Policy & Compliance | 1 | Compliance landscape (GDPR/UK/US) and obligations mapped ([compliance.md](compliance.md)), gaps tracked (RR-13); SDLC policy defined. No verification or legal review yet. |
 | Education & Guidance | 1 | Secure coding guidelines documented; security-expert author. No formal training. |
 
 ## Design

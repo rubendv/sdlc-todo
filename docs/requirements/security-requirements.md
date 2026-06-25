@@ -45,6 +45,17 @@ See [access-control.md](../threat-model/access-control.md).
 | SR-14 | Dependencies pinned and hash-verified via `uv.lock`. (scaffold ✅) | B2 Spoofing/Tampering → D2 |
 | SR-15 | Build images exclude secrets and VCS (`.dockerignore` excludes `.envs/`, `.git`). (scaffold ✅) | B2 Info disclosure → D1 |
 
+## Privacy & data-subject rights
+
+Compliance quick wins toward [compliance.md](../governance/compliance.md) (GDPR/UK/US). Full
+obligations are gated before processing real data (RR-13).
+
+| ID | Requirement | Ref |
+|----|-------------|-----|
+| SR-16 | A user can export their own personal data (account + tasks) in a machine-readable format (supports FR-7). | GDPR access/portability (Art 15/20) |
+| SR-17 | Deleting an account removes the user's account and tasks (DB cascade). Residual copies in logs/backups are governed by retention (deferred). | GDPR erasure (Art 17) |
+| SR-18 | Only strictly-necessary cookies are used (the session cookie); no analytics/tracking cookies, so no consent banner is required. | ePrivacy |
+
 ## Deferred — production settings (out of scope this iteration)
 
 Running locally in debug for now; revisit before any deployment. IDs kept for traceability.

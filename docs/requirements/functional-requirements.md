@@ -12,6 +12,7 @@ Core task tracking. Nothing fancy — enough to implement and run.
 | FR-4 | A user can create, read, update, and delete their **own** tasks. |
 | FR-5 | A user can list their **own** tasks, and only those. |
 | FR-6 | Admin: a superuser exists. Via the API an admin behaves as a normal user (own objects only); full access is out-of-band (mechanism TBD). |
+| FR-7 | A user can export all their own data — account profile and their tasks — in a machine-readable format (JSON). |
 
 ## Task model (MVP fields)
 

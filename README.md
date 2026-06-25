@@ -55,6 +55,7 @@ An SDLC follows a certain natural order. I've chosen to start in a small, agile 
    guidelines](docs/requirements/secure-coding-guidelines.md), each traced back to a specific threat. We also create a [strategy for testing](docs/requirements/testing-strategy.md) each requirement.
 6. **Build and prove it**: simple [REST API endpoints](backend/) to manage users and tasks, built according to our functional and security requirements and [access-control design](docs/threat-model/access-control.md). We also test the implementation according to our testing strategy, tracked in a [coverage matrix](docs/requirements/test-coverage.md).
 7. **Govern the process and manage our risks**: Create a [SAMM assessment](docs/governance/samm-assessment.md) to measure how mature our SDLC is at this point, and decide where we need to be before production deployment can happen, captured in an [SDLC policy](docs/governance/sdlc-policy.md). We also clearly record any unmitigated risks that we will accept for now in a [risk register](docs/threat-model/risk-register.md).
+8. **Map the compliance landscape**: work out which privacy and data-protection laws would apply (GDPR, UK GDPR, US state laws) and where the gaps are, in a [compliance doc](docs/governance/compliance.md) (not legal advice — to be reviewed by a professional before any real launch). We then fed that back into the rest: a general compliance risk in the [risk register](docs/threat-model/risk-register.md), an updated [SAMM assessment](docs/governance/samm-assessment.md), and a few compliance quick wins (data export, full erasure, cookie scope) folded into our [functional](docs/requirements/functional-requirements.md) and [security requirements](docs/requirements/security-requirements.md).
 
 You can follow this using the [articles](docs/articles/) (WIP, LLM drafts), or dive into the actual [work documents](#explore-the-docs) that contain the results of each activity so far.
 
@@ -68,6 +69,8 @@ In the current iteration we are aiming for:
 - Production settings and hardening (TLS, HSTS, secure cookies, `DEBUG=False`, production secrets).
 - Denial-of-service mitigations and audit logging.
 - A pass against ASVS v5 (a standard security checklist) and the Django deployment checklist.
+- Compliance work before any real user data — privacy notice, data-subject rights (export/erasure),
+  breach process, retention, DPIA — mapped in the [compliance landscape](docs/governance/compliance.md).
 - The frontend.
 
 ## Explore the docs
@@ -136,3 +139,6 @@ The security terms used above, briefly.
   and decide what to improve next.
 - **ASVS (Application Security Verification Standard)** — a checklist of security requirements to test
   an application against.
+- **GDPR / data-subject rights** — EU data-protection law; gives people rights over their personal
+  data (to be informed, and to access, correct, delete, or export it). The UK and many US states have
+  similar laws.
