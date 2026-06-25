@@ -1,5 +1,7 @@
 # SDLC Policy
 
+> **Example prompt:** *"Derive a short SDLC policy. Input: samm-assessment.md. Ask me about organizational constraints and how strict each gate should be before fixing them; the gate criteria are my decision, not yours. Output: a concise Markdown policy with the required activities per phase and the gates that block progress (commit, feature-complete, before production)."*
+
 How secure development works on this project. Derived from the [SAMM assessment](samm-assessment.md):
 it preserves the strong practices and sets minimum activities to raise the weak ones.
 

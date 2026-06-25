@@ -14,7 +14,7 @@ gap in the backlog means *not yet analyzed*, not *judged safe*.
 - Frontend: separate lightweight client over the API, served same-origin via the reverse proxy
   (no CORS); added later.
 - Data: identity (emails, password hashes, MFA secrets, tokens) and task content (titles,
-  descriptions, due dates). Task content is sensitive — treat as personal data.
+  descriptions, completion status). Task content is sensitive — treat as personal data.
 - Operator: small/solo, EU-based → GDPR applies.
 
 ## Steps
@@ -22,7 +22,7 @@ gap in the backlog means *not yet analyzed*, not *judged safe*.
 1. Doomsday scenarios — [doomsday-scenarios.md](doomsday-scenarios.md) *(done)*
 2. Trust boundaries & data-flow — [context-diagram.md](context-diagram.md), [level-1-dfd.md](level-1-dfd.md) *(done)*
 3. Threat enumeration — STRIDE / attack trees — [stride-analysis.md](stride-analysis.md), [attack-trees.md](attack-trees.md) *(perimeter STRIDE + critical-risk attack trees → CWE shortlist)*
-4. Mitigations & controls — [access-control.md](access-control.md) *(in progress: access control / open risk #1)*
+4. Mitigations & controls — [access-control.md](access-control.md) *(access control designed & implemented; more controls as risks are tackled)*
 5. Residual risk & decisions — [risk-register.md](risk-register.md)
 
 ## Not yet modeled (backlog)
@@ -32,6 +32,8 @@ modeling gap to fill, not a judgment that the risk is absent.
 
 - **Account recovery & email flows** — STRIDE + attack tree for password reset, email verification,
   and account enumeration (the prime account-takeover path). (D1)
+- **Third-party process boundaries** — full STRIDE on the mail server and package registry, now
+  modeled as processes outside the trust boundary in the [L1 DFD](level-1-dfd.md). (D1 / D2)
 - **Session & token lifecycle** — token expiry/rotation/revocation, session invalidation on
   password/MFA change, and the session-vs-token CSRF interaction. (D1)
 - **Internal trust zones** — per-element STRIDE for the data stores and app processes, starting with
@@ -43,8 +45,8 @@ modeling gap to fill, not a judgment that the risk is absent.
 - **Detection & response** — how each doomsday is detected and scoped (logging, monitoring,
   alerting); pairs with audit logging (RR-4).
 - **Data lifecycle & privacy** — retention, erasure (GDPR), and backups (add backups to the DFD). (D1)
-- **Assumptions & trust** — state what we trust (host/Docker daemon, package registry, email
-  provider, reverse proxy) and add the host as a DFD element.
+- **Assumptions & trust** — state what we trust (host/Docker daemon, reverse proxy) and add the host
+  as a DFD element.
 - **Dependency vulnerability monitoring** — known-CVE / SCA tracking to complement provenance
   (RR-9–RR-11). (D2)
 - **Risk rating** — assign likelihood and impact (and a resulting priority) to the threats and the

@@ -1,5 +1,7 @@
 # Access Control
 
+> **Example prompt:** *"Design the access-control architecture. Input: security-requirements.md, the threat model, and the codebase. Ask me to define the policy — the roles, who may do what, how 'ownership' is decided, and how admins get access — rather than inferring it; this is a product decision, so don't assume it. Output: a Markdown design doc covering the roles, the enforcement layers, the admin model, and how each rule maps to a threat."*
+
 Mitigation for [open risk #1](stride-analysis.md). Design only — no implementation yet.
 
 **Decision:** authorize with Django's built-in **model permission** system, plus object-level

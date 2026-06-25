@@ -1,5 +1,7 @@
 # Functional Requirements (MVP)
 
+> **Example prompt:** *"Write the MVP functional requirements. Input: my description of the product. Ask me what the product must let users do and what is explicitly out of scope; do not invent features. Output: a numbered Markdown table of functional requirements, plus a small data model for the core entities."*
+
 Core task tracking. Nothing fancy — enough to implement and run.
 
 | ID | Requirement |
@@ -10,6 +12,7 @@ Core task tracking. Nothing fancy — enough to implement and run.
 | FR-4 | A user can create, read, update, and delete their **own** tasks. |
 | FR-5 | A user can list their **own** tasks, and only those. |
 | FR-6 | Admin: a superuser exists. Via the API an admin behaves as a normal user (own objects only); full access is out-of-band (mechanism TBD). |
+| FR-7 | A user can export all their own data — account profile and their tasks — in a machine-readable format (JSON). |
 
 ## Task model (MVP fields)
 
@@ -22,3 +25,9 @@ Core task tracking. Nothing fancy — enough to implement and run.
 | `created_at` / `updated_at` | datetime | auto |
 
 Accounts use the existing `User` model (allauth). No new profile fields this iteration.
+
+## Out of scope (this iteration)
+
+Single-user task lists only — no sharing or collaboration. No due dates, reminders, or
+notifications; no tags, categories, or search; no sub-tasks or attachments. The frontend UI is
+deferred — the backend exposes the API only.

@@ -1,5 +1,7 @@
 # Attack Trees — critical risks
 
+> **Example prompt:** *"Build attack trees for the most critical risks. Input: doomsday-scenarios.md and stride-analysis.md. Ask a developer about the technology stack and any product specifics needed to judge which weaknesses are plausible; don't assume the stack. Output: for each critical scenario, a nested-bullet attack tree whose leaves are concrete coding mistakes tagged with a CWE, followed by a prioritized CWE shortlist as a Markdown table."*
+
 Decompose the two most critical [doomsday scenarios](doomsday-scenarios.md) into the **coding
 mistakes** that enable them, so we can shortlist the CWEs that matter for *our* code. Leaves are tagged
 with a CWE. Build-time and infra paths are out of scope here (covered by SR-13–15); this is about

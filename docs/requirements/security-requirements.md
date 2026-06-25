@@ -1,9 +1,14 @@
 # Security Requirements (MVP)
 
+> **Example prompt:** *"Derive the security requirements. Input: the threat model (doomsday-scenarios.md, stride-analysis.md, attack-trees.md) and functional-requirements.md. Ask a developer which controls the scaffold already provides, and ask me about any compliance obligations; do not assume either. Output: a Markdown table grouped by theme, each requirement traced back to a threat or doomsday scenario, marking which are already met."*
+
 Derived from the threat model. Each links to a [doomsday scenario](../threat-model/doomsday-scenarios.md)
 (DDS) and/or [STRIDE](../threat-model/stride-analysis.md) entry. `scaffold ✅` = already provided by
 cookiecutter-django. **DoS, non-repudiation, and production settings/hardening are out of scope this
 iteration** — we're building a local, debug-enabled basis first (see [README](README.md)).
+
+**Compliance:** GDPR applies (EU operator handling personal data). Account self-delete (FR-3) partly
+serves data-subject erasure; a full GDPR/privacy review is deferred to before production.
 
 ## Authentication & identity
 
@@ -39,6 +44,17 @@ See [access-control.md](../threat-model/access-control.md).
 | SR-13 | Secrets read from the environment (`SECRET_KEY`, DB creds via `django-environ`); no real secrets committed. Local `.envs/` hold dev-only values. (scaffold ✅) | B2 Info disclosure → D1 |
 | SR-14 | Dependencies pinned and hash-verified via `uv.lock`. (scaffold ✅) | B2 Spoofing/Tampering → D2 |
 | SR-15 | Build images exclude secrets and VCS (`.dockerignore` excludes `.envs/`, `.git`). (scaffold ✅) | B2 Info disclosure → D1 |
+
+## Privacy & data-subject rights
+
+Compliance quick wins toward [compliance.md](../governance/compliance.md) (GDPR/UK/US). Full
+obligations are gated before processing real data (RR-13).
+
+| ID | Requirement | Ref |
+|----|-------------|-----|
+| SR-16 | A user can export their own personal data (account + tasks) in a machine-readable format (supports FR-7). | GDPR access/portability (Art 15/20) |
+| SR-17 | Deleting an account removes the user's account and tasks (DB cascade). Residual copies in logs/backups are governed by retention (deferred). | GDPR erasure (Art 17) |
+| SR-18 | Only strictly-necessary cookies are used (the session cookie); no analytics/tracking cookies, so no consent banner is required. | ePrivacy |
 
 ## Deferred — production settings (out of scope this iteration)
 

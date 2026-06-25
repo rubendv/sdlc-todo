@@ -42,19 +42,20 @@ bottom. Skim that first if a word trips you up.
 
 An SDLC follows a certain natural order. I've chosen to start in a small, agile manner. We don't need everything perfect just yet, we need the ability to iterate fast, but still follow the secure development principles as we go along.
 
-1. **Scaffold**: backend generated from cookiecutter-django, a project template that provides Django,
+1. **Scaffold**: [backend](backend/) generated from cookiecutter-django, a project template that provides Django,
    a REST API, PostgreSQL, Redis, and login/accounts, on a Docker local-dev setup, in a monorepo with
    room for a frontend, to be added later. By using this scaffold, we already get a lot of best practices provided for free. We will still review this setup more deeply at a later time.
-2. **Doomsday scenarios**: the three worst outcomes everything else is judged against: data
+2. **[Doomsday scenarios](docs/threat-model/doomsday-scenarios.md)**: the three worst outcomes everything else is judged against: data
    disclosure, infrastructure abuse, and significant downtime.
-3. **Model our system design**: a context diagram and a data-flow diagram (pictures of how data moves) that
+3. **Model our system design**: a [context diagram](docs/threat-model/context-diagram.md) and a [data-flow diagram](docs/threat-model/level-1-dfd.md) (pictures of how data moves) that
    mark the *trust boundaries*, the riskiest crossing points.
-4. **Enumerate threats** — STRIDE (a checklist of threat types) on the outside edge, attack trees for
+4. **Enumerate threats** — [STRIDE](docs/threat-model/stride-analysis.md) (a checklist of threat types) on the outside edge, [attack trees](docs/threat-model/attack-trees.md) for
    the critical risks, and a shortlist of CWEs (standard coding-mistake categories) that matter for our app.
-5. **Requirements and guidelines** — functional and security requirements, plus secure coding
-   guidelines, each traced back to a specific threat. We also create a strategy for testing each requirement.
-6. **Build and prove it**: simple REST API endpoints to manage users and tasks, built according to our functional and security requirements. We also test the implementation according to our testing strategy.
-7. **Govern the process and manage our risks**: Create a SAMM assessment to measure how mature our SDLC is at this point, and decide where we need to be before production deployment can happen. We also clearly record any unmitigated risks that we will accept for now.
+5. **Requirements and guidelines** — [functional](docs/requirements/functional-requirements.md) and [security requirements](docs/requirements/security-requirements.md), plus [secure coding
+   guidelines](docs/requirements/secure-coding-guidelines.md), each traced back to a specific threat. We also create a [strategy for testing](docs/requirements/testing-strategy.md) each requirement.
+6. **Build and prove it**: simple [REST API endpoints](backend/) to manage users and tasks, built according to our functional and security requirements and [access-control design](docs/threat-model/access-control.md). We also test the implementation according to our testing strategy, tracked in a [coverage matrix](docs/requirements/test-coverage.md).
+7. **Govern the process and manage our risks**: Create a [SAMM assessment](docs/governance/samm-assessment.md) to measure how mature our SDLC is at this point, and decide where we need to be before production deployment can happen, captured in an [SDLC policy](docs/governance/sdlc-policy.md). We also clearly record any unmitigated risks that we will accept for now in a [risk register](docs/threat-model/risk-register.md).
+8. **Map the compliance landscape**: work out which privacy and data-protection laws would apply (GDPR, UK GDPR, US state laws) and where the gaps are, in a [compliance doc](docs/governance/compliance.md) (not legal advice — to be reviewed by a professional before any real launch). We then fed that back into the rest: a general compliance risk in the [risk register](docs/threat-model/risk-register.md), an updated [SAMM assessment](docs/governance/samm-assessment.md), and a few compliance quick wins (data export, full erasure, cookie scope) folded into our [functional](docs/requirements/functional-requirements.md) and [security requirements](docs/requirements/security-requirements.md).
 
 You can follow this using the [articles](docs/articles/) (WIP, LLM drafts), or dive into the actual [work documents](#explore-the-docs) that contain the results of each activity so far.
 
@@ -68,6 +69,8 @@ In the current iteration we are aiming for:
 - Production settings and hardening (TLS, HSTS, secure cookies, `DEBUG=False`, production secrets).
 - Denial-of-service mitigations and audit logging.
 - A pass against ASVS v5 (a standard security checklist) and the Django deployment checklist.
+- Compliance work before any real user data — privacy notice, data-subject rights (export/erasure),
+  breach process, retention, DPIA — mapped in the [compliance landscape](docs/governance/compliance.md).
 - The frontend.
 
 ## Explore the docs
@@ -136,3 +139,6 @@ The security terms used above, briefly.
   and decide what to improve next.
 - **ASVS (Application Security Verification Standard)** — a checklist of security requirements to test
   an application against.
+- **GDPR / data-subject rights** — EU data-protection law; gives people rights over their personal
+  data (to be informed, and to access, correct, delete, or export it). The UK and many US states have
+  similar laws.

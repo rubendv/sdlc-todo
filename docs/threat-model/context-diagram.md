@@ -1,5 +1,7 @@
 # Context Diagram
 
+> **Example prompt:** *"Produce a context diagram for this application. Input: doomsday-scenarios.md and the codebase (backend/). Ask me about the actors and external systems, and which of them we will fully threat-model: include a system as an external entity here only if we will NOT run a full STRIDE analysis on it — systems we intend to fully analyze are modeled as processes in the level-1 DFD instead. Don't guess. Output: a Mermaid flowchart with the app as a single process in the middle and the external entities around it, followed by a short table describing each."*
+
 The Todo app as a single monolithic process. External entities that interact with it.
 
 ```mermaid
