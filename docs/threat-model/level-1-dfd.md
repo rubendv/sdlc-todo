@@ -9,13 +9,15 @@ TODO: this diagram is very messy. We need to clean it up.
 
 ```mermaid
 flowchart TB
-    %% external entities
+    %% external entities (actors)
     user[User]
     browser[Browser / Frontend SPA]
     dev[Developer]
     admin[Admin]
-    email[Email / SMTP service]
-    registry[Package registry<br/>PyPI / npm]
+
+    %% third-party processes (full STRIDE; outside our trust boundary)
+    email([Email / SMTP service])
+    registry([Package registry<br/>PyPI / npm])
 
     subgraph internal[Internal network]
         subgraph tb_proxy[trust boundary: edge]
@@ -27,10 +29,10 @@ flowchart TB
             static([4.0 Static asset serving<br/>WhiteNoise])
         end
         subgraph tb_pg[trust boundary: database]
-            pg[(D1 PostgreSQL<br/>identity, tasks, sessions)]
+            pg[(DS1 PostgreSQL<br/>identity, tasks, sessions)]
         end
         subgraph tb_redis[trust boundary: cache]
-            redis[(D2 Redis<br/>session + task cache)]
+            redis[(DS2 Redis<br/>session + task cache)]
         end
     end
 
@@ -62,14 +64,15 @@ flowchart TB
 | 3.0 | Task API (DRF) | CRUD on tasks, scoped to the authenticated user |
 | 4.0 | Static asset serving (WhiteNoise) | Serves Django/DRF static assets |
 
-## Data stores
+The mail server and package registry are **third-party processes** — outside our trust boundary, but
+modeled as processes (not external entities) because we intend to run a full STRIDE analysis on each.
 
-TODO: these D1, D2 etc overlap with the doomsday scenario IDs.
+## Data stores
 
 | # | Store | Holds |
 |---|-------|-------|
-| D1 | PostgreSQL | Identity (emails, password hashes, MFA secrets), task records, sessions (source of truth) |
-| D2 | Redis | Cache: read-optimized sessions (write-through), task cache |
+| DS1 | PostgreSQL | Identity (emails, password hashes, MFA secrets), task records, sessions (source of truth) |
+| DS2 | Redis | Cache: read-optimized sessions (write-through), task cache |
 
 ## Trust boundaries
 
@@ -86,8 +89,8 @@ Each internal component is its own trust zone — the Django app doesn't implici
 DB, or cache, and vice versa — but these are only in play once an attacker is already inside.
 
 - Edge ↔ Django app: proxy → processes 2.0–4.0.
-- Django app ↔ database: 2.0/3.0 → PostgreSQL (D1).
-- Django app ↔ cache: 2.0/3.0 → Redis (D2).
+- Django app ↔ database: 2.0/3.0 → PostgreSQL (DS1).
+- Django app ↔ cache: 2.0/3.0 → Redis (DS2).
 
 ## Open
 

@@ -24,3 +24,9 @@ Core task tracking. Nothing fancy — enough to implement and run.
 | `created_at` / `updated_at` | datetime | auto |
 
 Accounts use the existing `User` model (allauth). No new profile fields this iteration.
+
+## Out of scope (this iteration)
+
+Single-user task lists only — no sharing or collaboration. No due dates, reminders, or
+notifications; no tags, categories, or search; no sub-tasks or attachments. The frontend UI is
+deferred — the backend exposes the API only.

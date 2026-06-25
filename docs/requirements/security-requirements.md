@@ -7,6 +7,9 @@ Derived from the threat model. Each links to a [doomsday scenario](../threat-mod
 cookiecutter-django. **DoS, non-repudiation, and production settings/hardening are out of scope this
 iteration** — we're building a local, debug-enabled basis first (see [README](README.md)).
 
+**Compliance:** GDPR applies (EU operator handling personal data). Account self-delete (FR-3) partly
+serves data-subject erasure; a full GDPR/privacy review is deferred to before production.
+
 ## Authentication & identity
 
 | ID | Requirement | Ref |
