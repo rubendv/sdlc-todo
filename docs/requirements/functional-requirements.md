@@ -1,5 +1,7 @@
 # Functional Requirements (MVP)
 
+> **Example prompt:** *"Write the MVP functional requirements. Input: my description of the product. Ask me what the product must let users do and what is explicitly out of scope; do not invent features. Output: a numbered Markdown table of functional requirements, plus a small data model for the core entities."*
+
 Core task tracking. Nothing fancy — enough to implement and run.
 
 | ID | Requirement |

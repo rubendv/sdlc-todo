@@ -1,5 +1,7 @@
 # Risk Register
 
+> **Example prompt:** *"Maintain the risk register. Input: stride-analysis.md, the attack trees, and any gaps surfaced while building. Phrase each risk the same way as in the STRIDE analysis — 'An attacker could <action> in order to <goal>, leading to <impact>' — linked to a doomsday scenario. For each gap, ask me for the treatment decision (accept or mitigate) and the trigger for revisiting it; these are my calls, not yours. Output: a Markdown table with that risk statement plus a decision, rationale, and review trigger per row."*
+
 The project's risks and their treatment: consciously accepted residual risks, and open risks with a
 planned mitigation. Each has a rationale and a trigger that says when to revisit it. Most deferrals
 share one trigger: **before any production deployment**.

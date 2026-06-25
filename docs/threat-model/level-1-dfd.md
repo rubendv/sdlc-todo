@@ -1,5 +1,7 @@
 # Level 1 DFD
 
+> **Example prompt:** *"Produce a level-1 data-flow diagram. Input: context-diagram.md and the codebase. Ask a developer about internal design that isn't obvious from the code: the data stores, the session strategy, and which components run as separate processes. Don't assume them. Output: a Mermaid flowchart of processes, data stores, external entities and the flows between them, with the trust boundaries drawn in and ranked by priority in a short table."*
+
 Decomposes the monolithic `Todo` process from the [context diagram](context-diagram.md) into its
 component processes, data stores, and the external entities they exchange data with.
 

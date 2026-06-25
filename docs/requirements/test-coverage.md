@@ -1,5 +1,7 @@
 # Test Coverage Matrix
 
+> **Example prompt:** *"Build the test-coverage matrix. Input: functional-requirements.md, security-requirements.md, and the actual test suite — ask a developer where the tests live or to run them. Don't claim coverage you can't see in the tests. Output: a Markdown table per API mapping every requirement to its positive and negative test cases, with gaps called out."*
+
 Maps each in-scope requirement to its positive (P) and negative (N) test case, per API.
 Status: ✅ covered · ⚠️ accepted residual · ❌ gap.
 

@@ -1,5 +1,7 @@
 # Testing Strategy (MVP)
 
+> **Example prompt:** *"Define the testing strategy. Input: functional-requirements.md, security-requirements.md, secure-coding-guidelines.md, the CWE shortlist, and the project's test tooling. Ask a developer what test framework and static-analysis tooling already exist before relying on them. Output: a Markdown strategy leading with security and negative tests, a table mapping each CWE to how it is verified, and the requirements for any tooling not yet in place."*
+
 Validate the [functional](functional-requirements.md) and [security](security-requirements.md)
 requirements using the scaffold's test stack. **Security tests for access control are the priority**
 — they are how we prove the threat-model mitigations hold. Negative tests carry the weight.

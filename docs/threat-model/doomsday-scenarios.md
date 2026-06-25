@@ -1,5 +1,7 @@
 # Doomsday Scenarios
 
+> **Example prompt:** *"Identify this application's doomsday scenarios. Input: my answers to your questions — there is no prior artifact yet. First ask me about the business context: what the product does, who its users are, what data it holds, and what outcomes would be catastrophic for the users and the business. Do not assume any of this. Output: the three worst outcomes, ranked, each a short heading plus a one-line impact statement, in Markdown."*
+
 Three catastrophic outcomes, every security activity is aimed at preventing these scenarios from happening or reducing their impact if they do happen.
 
 ## D1 — Disclosure of user data

@@ -1,5 +1,7 @@
 # Security Requirements (MVP)
 
+> **Example prompt:** *"Derive the security requirements. Input: the threat model (doomsday-scenarios.md, stride-analysis.md, attack-trees.md) and functional-requirements.md. Ask a developer which controls the scaffold already provides, and ask me about any compliance obligations; do not assume either. Output: a Markdown table grouped by theme, each requirement traced back to a threat or doomsday scenario, marking which are already met."*
+
 Derived from the threat model. Each links to a [doomsday scenario](../threat-model/doomsday-scenarios.md)
 (DDS) and/or [STRIDE](../threat-model/stride-analysis.md) entry. `scaffold ✅` = already provided by
 cookiecutter-django. **DoS, non-repudiation, and production settings/hardening are out of scope this

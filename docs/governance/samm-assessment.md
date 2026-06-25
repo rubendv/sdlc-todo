@@ -1,5 +1,7 @@
 # OWASP SAMM Assessment
 
+> **Example prompt:** *"Do a basic OWASP SAMM v2 self-assessment. Input: the whole repository and its docs. Ask a developer about practices not visible in the repo — CI/CD, deployment, operations, incident response — and don't assume their maturity. Output: a Markdown table scoring each of the fifteen SAMM practices 0–3 with a one-line justification, plus a short summary of the strong and weak areas and the targets."*
+
 Basic self-assessment against [SAMM v2](https://owaspsamm.org), as of 2026-06-19. One maturity score
 per practice (0–3): 0 none · 1 ad hoc/basic · 2 structured/repeatable · 3 measured/optimized. SAMM
 scores two streams per practice; this is simplified to one score per practice for a first pass.

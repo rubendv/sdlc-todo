@@ -1,15 +1,10 @@
 # STRIDE — perimeter boundaries
 
+> **Example prompt:** *"Run a STRIDE analysis on the high-priority trust boundaries. Input: level-1-dfd.md and doomsday-scenarios.md. Before marking anything mitigated, ask a developer which security controls already exist; do not assume the scaffold's defaults. Output: a Markdown table per boundary with columns for the STRIDE category, the risk, the mitigation, and the doomsday scenario (DDS). Phrase each risk generically — 'An attacker could <action> in order to <goal>, leading to <impact>' — and link it to a DDS (D1 disclosure, D2 infra/lateral movement, D3 downtime); drop any risk with no DDS path. Mark mitigation as Handled, Partial, Open, or N/A yet."*
+
 Initial STRIDE for the two **High-priority** boundaries from the [Level 1 DFD](level-1-dfd.md):
 B1 Internet ↔ edge, and B2 build/deploy. Internal boundaries are out of scope here
 (defense-in-depth, lower priority).
-
-Risks are kept generic — *An attacker could `<action>` in order to `<goal>`, leading to
-`<impact>`* — and each links to a [doomsday scenario](doomsday-scenarios.md) (DDS): **D1** disclosure,
-**D2** infra/lateral movement, **D3** downtime. A risk with no DDS path is out of scope.
-
-Mitigation status reflects what the cookiecutter-django scaffold already provides:
-**Handled** · **Partial** (some coverage, gap remains) · **Open** (not handled) · **N/A yet**.
 
 TODO: the STRIDE analysis here is very shallow. We need to handle both sides of the data flow and the data flow itself. We will likely need to create separate files per trust boundary to keep things maintainable, maybe even in some machine readable format like YAML so we can use scripts to manage them.
 

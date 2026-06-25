@@ -1,5 +1,7 @@
 # Secure Coding Guidelines (MVP)
 
+> **Example prompt:** *"Write secure-coding guidelines. Input: the CWE shortlist in attack-trees.md and the codebase's stack. Ask a developer about framework and library choices where they affect a rule; don't assume the stack. Output: one concrete, actionable rule per shortlisted CWE in Markdown, each citing its CWE and the risk it prevents."*
+
 Concrete rules for this codebase, one per CWE in the [shortlist](../threat-model/attack-trees.md).
 Default stance: **deny by default, make trust explicit**. Each rule cites its CWE and the doomsday
 scenario it guards. Keep these green in review and in tests.
