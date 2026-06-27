@@ -1,6 +1,6 @@
 # Todo
 
-I am a product security consultant. I created this repository to have a small, practical example of how to approach secure sofware development. Many developers are looking for practical advice or examples to form their mental model of how to accomplish pretty much anything in software development. This repo is my attempt to provide that for software security.
+I am a product security consultant. I created this repository to have a small, practical example of how to approach secure software development. Many developers are looking for practical advice or examples to form their mental model of how to accomplish pretty much anything in software development. This repo is my attempt to provide that for software security.
 
 Before I switched to full-time security consulting, I worked as a software engineer on the backend of products where security was a major focus. This was before the time of AI coding. Creating this example application is also my way of familiarizing myself with the AI coding tools that are an important part of modern software development, so I do not end up as a dinosaur stuck in my old ways.
 
@@ -11,8 +11,20 @@ Right now, I am going through the initial files that the LLM created when I star
 
 > **Work in progress.** Built in roughly 8 hours on a free day. Local, debug-only, MVP core; not
 > production-ready. The code and the correctness of the security analysis have **not** been thoroughly
-> reviewed yet, and the writing still needs an editing pass to remove the "AI slop" feel. Treat it as
-> an early first pass, not the finished example it is meant to become.
+> reviewed yet, and the writing still needs an editing pass to find its voice. Treat it as an early
+> first pass, not the finished example it is meant to become.
+
+## Start here
+
+You do not need to run anything to learn from this repo — the docs are the point. If you write
+software but have never watched someone "do security properly" from the start, begin with the
+[doomsday scenarios](docs/threat-model/doomsday-scenarios.md) (the worst outcomes everything else exists
+to prevent), then the [threat-model README](docs/threat-model/README.md). From there, follow the steps
+below in order. Skim the [glossary](#jargon-in-plain-english) whenever a term trips you up.
+
+This is a worked example of the *process* of building securely — threat modeling, requirements,
+testing, governance — on a deliberately small app. It is **not** a course on cryptography, a
+penetration-testing guide, or a substitute for legal review.
 
 ## What it does
 
@@ -22,7 +34,7 @@ optional description, and a done flag. Admins exist but get no special access th
 
 This is deliberately simple, not a complex real-world product. That is fine, because the goal is to
 show the principles of a secure SDLC on something small enough to follow end to end.
-I want to show that incorporating security into your SDLC doesn't need to be costly and complex undertaking, all companies, tiny or huge, can do it.
+I want to show that incorporating security into your SDLC doesn't need to be a costly and complex undertaking, all companies, tiny or huge, can do it.
 
 ## New to secure development?
 
@@ -42,9 +54,11 @@ bottom. Skim that first if a word trips you up.
 
 An SDLC follows a certain natural order. I've chosen to start in a small, agile manner. We don't need everything perfect just yet, we need the ability to iterate fast, but still follow the secure development principles as we go along.
 
-1. **Scaffold**: [backend](backend/) generated from cookiecutter-django, a project template that provides Django,
+1. **Scaffold**: we started from [cookiecutter-django](backend/), a project template that provides Django,
    a REST API, PostgreSQL, Redis, and login/accounts, on a Docker local-dev setup, in a monorepo with
-   room for a frontend, to be added later. By using this scaffold, we already get a lot of best practices provided for free. We will still review this setup more deeply at a later time.
+   room for a frontend, to be added later. We lead with the scaffold rather than the threats only so the
+   security work has something concrete to hang on — the boilerplate is not the point, and we will still
+   review this setup more deeply at a later time.
 2. **[Doomsday scenarios](docs/threat-model/doomsday-scenarios.md)**: the three worst outcomes everything else is judged against: data
    disclosure, infrastructure abuse, and significant downtime.
 3. **Model our system design**: a [context diagram](docs/threat-model/context-diagram.md) and a [data-flow diagram](docs/threat-model/level-1-dfd.md) (pictures of how data moves) that
@@ -57,7 +71,9 @@ An SDLC follows a certain natural order. I've chosen to start in a small, agile 
 7. **Govern the process and manage our risks**: Create a [SAMM assessment](docs/governance/samm-assessment.md) to measure how mature our SDLC is at this point, and decide where we need to be before production deployment can happen, captured in an [SDLC policy](docs/governance/sdlc-policy.md). We also clearly record any unmitigated risks that we will accept for now in a [risk register](docs/threat-model/risk-register.md).
 8. **Map the compliance landscape**: work out which privacy and data-protection laws would apply (GDPR, UK GDPR, US state laws) and where the gaps are, in a [compliance doc](docs/governance/compliance.md) (not legal advice — to be reviewed by a professional before any real launch). We then fed that back into the rest: a general compliance risk in the [risk register](docs/threat-model/risk-register.md), an updated [SAMM assessment](docs/governance/samm-assessment.md), and a few compliance quick wins (data export, full erasure, cookie scope) folded into our [functional](docs/requirements/functional-requirements.md) and [security requirements](docs/requirements/security-requirements.md).
 
-You can follow this using the [articles](docs/articles/) (WIP, LLM drafts), or dive into the actual [work documents](#explore-the-docs) that contain the results of each activity so far.
+You can follow the thinking using the [articles](docs/articles/) — currently high-level outlines of
+the points to be made, to be written up later in my own voice — or dive straight into the actual
+[work documents](#explore-the-docs) that contain the results of each activity so far.
 
 ## Current focus 
 In the current iteration we are aiming for:
@@ -94,7 +110,9 @@ todo/
 ```
 
 ## Run locally
-It's not really doing much yet, just a REST API backend.
+
+You don't need to run anything to learn from this repo — the docs are self-contained. If you want to
+poke at the API, here's how. It's not really doing much yet, just a REST API backend.
 Stay tuned until it has a proper frontend.
 Needs Docker with the compose plugin.
 
@@ -116,27 +134,28 @@ The security terms used above, briefly.
 - **SDLC (software development life cycle)** — the whole process of building software, from idea to
   running it. A *secure* SDLC builds security into every step instead of adding it at the end.
 - **Threat model** — a structured look, done before building, at what could go wrong, who might cause
-  it, and what you will do about it.
+  it, and what you will do about it. See [docs/threat-model/](docs/threat-model/README.md).
 - **Doomsday scenario** — the worst outcomes the work exists to prevent. Here: leaking user data, the
-  server being used to attack others, and downtime bad enough that users leave.
-- **Data-flow diagram (DFD)** — a picture of how data moves between the parts of the system.
+  server being used to attack others, and downtime bad enough that users leave. See
+  [doomsday scenarios](docs/threat-model/doomsday-scenarios.md).
+- **Data-flow diagram (DFD)** — a picture of how data moves between the parts of the system. See the
+  [level-1 DFD](docs/threat-model/level-1-dfd.md).
 - **Trust boundary** — a line where data crosses from a less-trusted area into a more-trusted one (for
   example, the internet into your server). These crossings are where most risk lives.
 - **STRIDE** — a checklist of six threat types (spoofing, tampering, repudiation, information
-  disclosure, denial of service, elevation of privilege) used so no category is forgotten.
-- **Attack tree** — a breakdown of the steps an attacker could chain together to reach a goal.
+  disclosure, denial of service, elevation of privilege) used so no category is forgotten. See the
+  [STRIDE analysis](docs/threat-model/stride-analysis.md).
+- **Attack tree** — a breakdown of the steps an attacker could chain together to reach a goal. See
+  [attack trees](docs/threat-model/attack-trees.md).
 - **CWE (Common Weakness Enumeration)** — a standard catalog of coding-mistake types, such as SQL
   injection. We shortlist the ones most relevant to this app.
-- **Access control / authorization** — deciding who may do what. *Object-level ownership* means a user
-  can touch only their own records, not anyone else's.
-- **Fail closed** — when the code is unsure, deny rather than allow.
-- **CORS / same-origin** — browser rules about which websites may call your API. We sidestep the
-  complexity by serving the frontend from the same address as the API.
-- **Accepted risk / review trigger** — a gap we knowingly leave for now, written down with the
-  condition that says when we must come back to it (often "before going to production").
-- **SAST** — static analysis: tools that scan source code for likely security bugs.
+- **Access control** — deciding who may do what, and on which objects.
+- **Same-origin** — serving the frontend from the same address as the API, which avoids issues with the same origin policy of the browser.
+- **Risk register** — the written record of gaps we knowingly leave for now, each with the condition
+  that says when we must come back to it (often "before going to production"). See
+  [risk register](docs/threat-model/risk-register.md).
 - **SAMM (Software Assurance Maturity Model)** — a way to score how mature your security practices are
-  and decide what to improve next.
+  and decide what to improve next. See the [SAMM assessment](docs/governance/samm-assessment.md).
 - **ASVS (Application Security Verification Standard)** — a checklist of security requirements to test
   an application against.
 - **GDPR / data-subject rights** — EU data-protection law; gives people rights over their personal
