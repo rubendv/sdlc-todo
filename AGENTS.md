@@ -28,9 +28,8 @@ deploying), stop and surface it as a decision rather than doing it. These are ow
    (docs/threat-model/doomsday-scenarios.md) and a [STRIDE](docs/threat-model/stride-analysis.md)
    entry. If you can't trace a change to one, ask before proceeding.
 2. **Ask, don't assume, on product/risk decisions.** Roles, who-can-do-what, what is in/out of scope,
-   compliance obligations — these are the owner's calls, not yours. The article
-   [01-building-securely-with-an-llm.md](docs/articles/01-building-securely-with-an-llm.md) (currently
-   an outline) captures the intended collaboration style: surface decisions, don't silently pick one.
+   compliance obligations — these are the owner's calls, not yours. Surface decisions, don't silently
+   pick one.
 3. **Keep the docs in sync with the code.** New requirement → add to
    [functional](docs/requirements/functional-requirements.md) or
    [security](docs/requirements/security-requirements.md) requirements and the
@@ -57,7 +56,6 @@ todo/
 │   ├── requirements/          functional + security requirements, secure-coding guidelines,
 │   │                          testing strategy, test-coverage matrix
 │   ├── governance/            SAMM assessment, SDLC policy, compliance landscape
-│   └── articles/              narrative walkthroughs (currently outlines, to be written in own voice)
 └── backend/                   Django project (the actual API)
     ├── config/                project settings (base/local/test/production), urls, api_router
     ├── todo/
@@ -148,8 +146,8 @@ env files under `backend/.envs/.local/`). The local settings hardcode a dev `SEC
 - Security terms are defined in the README [glossary](README.md#jargon-in-plain-english); use them
   consistently (CWE IDs, STRIDE categories, doomsday-scenario IDs like D1/D2/D3, requirement IDs like
   SR-5, risk IDs like RR-1).
-- The articles under `docs/articles/` are currently **outlines** awaiting the owner's voice. Do not
-  flesh them out into finished prose without explicit instruction; refining the bullet points is fine.
+- Narrative articles under `docs/articles/` are planned but not yet written. Do not flesh them out
+  into finished prose without explicit instruction.
 - The risk register is a table; direct (attacker) risks are phrased like the STRIDE analysis, and
   process/coverage gaps are phrased as "because <control> is missing, …". Follow that when adding rows.
 
@@ -165,7 +163,6 @@ env files under `backend/.envs/.local/`). The local settings hardcode a dev `SEC
   checking the [compliance doc](docs/governance/compliance.md) (GDPR is in scope for the operator).
 - **Don't mark a risk "resolved"** in the risk register without the corresponding control being built
   and tested; risks are accepted with a trigger, not hand-waved away.
-- **Don't write production prose into the articles.** They are outlines until the owner writes them.
 
 ## When in doubt
 

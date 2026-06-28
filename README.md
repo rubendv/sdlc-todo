@@ -71,9 +71,8 @@ An SDLC follows a certain natural order. I've chosen to start in a small, agile 
 7. **Govern the process and manage our risks**: Create a [SAMM assessment](docs/governance/samm-assessment.md) to measure how mature our SDLC is at this point, and decide where we need to be before production deployment can happen, captured in an [SDLC policy](docs/governance/sdlc-policy.md). We also clearly record any unmitigated risks that we will accept for now in a [risk register](docs/threat-model/risk-register.md).
 8. **Map the compliance landscape**: work out which privacy and data-protection laws would apply (GDPR, UK GDPR, US state laws) and where the gaps are, in a [compliance doc](docs/governance/compliance.md) (not legal advice — to be reviewed by a professional before any real launch). We then fed that back into the rest: a general compliance risk in the [risk register](docs/threat-model/risk-register.md), an updated [SAMM assessment](docs/governance/samm-assessment.md), and a few compliance quick wins (data export, full erasure, cookie scope) folded into our [functional](docs/requirements/functional-requirements.md) and [security requirements](docs/requirements/security-requirements.md).
 
-You can follow the thinking using the [articles](docs/articles/) — currently high-level outlines of
-the points to be made, to be written up later in my own voice — or dive straight into the actual
-[work documents](#explore-the-docs) that contain the results of each activity so far.
+Dive straight into the [work documents](#explore-the-docs) that contain the results of each
+activity so far. (Narrative articles are planned but not yet written.)
 
 ## Current focus 
 In the current iteration we are aiming for:
@@ -96,14 +95,13 @@ The docs are the point of this repository.
 - Threat model: [docs/threat-model/](docs/threat-model/README.md)
 - Requirements: [docs/requirements/](docs/requirements/README.md)
 - Governance: [docs/governance/](docs/governance/README.md)
-- Articles (LLM drafts, WIP): [docs/articles/](docs/articles/)
 
 ## Layout
 
 ```
 todo/
 ├── backend/                  Django project (API)
-├── docs/                     threat model, requirements, governance, articles
+├── docs/                     threat model, requirements, governance
 ├── frontend/                 not started; will be served same-origin via the reverse proxy
 ├── docker-compose.local.yml
 └── justfile
