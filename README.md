@@ -11,20 +11,8 @@ Right now, I am going through the initial files that the LLM created when I star
 
 > **Work in progress.** Built in roughly 8 hours on a free day. Local, debug-only, MVP core; not
 > production-ready. The code and the correctness of the security analysis have **not** been thoroughly
-> reviewed yet, and the writing still needs an editing pass to find its voice. Treat it as an early
-> first pass, not the finished example it is meant to become.
-
-## Start here
-
-You do not need to run anything to learn from this repo — the docs are the point. If you write
-software but have never watched someone "do security properly" from the start, begin with the
-[doomsday scenarios](docs/threat-model/doomsday-scenarios.md) (the worst outcomes everything else exists
-to prevent), then the [threat-model README](docs/threat-model/README.md). From there, follow the steps
-below in order. Skim the [glossary](#jargon-in-plain-english) whenever a term trips you up.
-
-This is a worked example of the *process* of building securely — threat modeling, requirements,
-testing, governance — on a deliberately small app. It is **not** a course on cryptography, a
-penetration-testing guide, or a substitute for legal review.
+> reviewed yet, and the writing still needs an editing pass to remove the "AI slop" feel. Treat it as
+> an early first pass, not the finished example it is meant to become.
 
 ## What it does
 
@@ -54,11 +42,9 @@ bottom. Skim that first if a word trips you up.
 
 An SDLC follows a certain natural order. I've chosen to start in a small, agile manner. We don't need everything perfect just yet, we need the ability to iterate fast, but still follow the secure development principles as we go along.
 
-1. **Scaffold**: we started from [cookiecutter-django](backend/), a project template that provides Django,
+1. **Scaffold**: [backend](backend/) generated from cookiecutter-django, a project template that provides Django,
    a REST API, PostgreSQL, Redis, and login/accounts, on a Docker local-dev setup, in a monorepo with
-   room for a frontend, to be added later. We lead with the scaffold rather than the threats only so the
-   security work has something concrete to hang on — the boilerplate is not the point, and we will still
-   review this setup more deeply at a later time.
+   room for a frontend, to be added later. By using this scaffold, we already get a lot of best practices provided for free. We will still review this setup more deeply at a later time.
 2. **[Doomsday scenarios](docs/threat-model/doomsday-scenarios.md)**: the three worst outcomes everything else is judged against: data
    disclosure, infrastructure abuse, and significant downtime.
 3. **Model our system design**: a [context diagram](docs/threat-model/context-diagram.md) and a [data-flow diagram](docs/threat-model/level-1-dfd.md) (pictures of how data moves) that
