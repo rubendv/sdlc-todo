@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import pytest
+from allauth.account.models import EmailAddress
 from django.contrib.auth.models import Group
 from django.urls import reverse
 from rest_framework import status
@@ -17,6 +18,8 @@ pytestmark = pytest.mark.django_db
 
 LIST_URL = reverse("api:user-list")
 ME_URL = reverse("api:user-me")
+TOKEN_URL = reverse("obtain_auth_token")
+PASSWORD = "correct-horse-battery-staple-42"  # noqa: S105
 
 
 def _detail_url(user: User) -> str:
@@ -150,3 +153,49 @@ def test_invalid_token_is_rejected():
         status.HTTP_401_UNAUTHORIZED,
         status.HTTP_403_FORBIDDEN,
     )
+
+
+def _user_with_email(*, verified: bool) -> User:
+    user = _user(password=PASSWORD)
+    EmailAddress.objects.create(
+        user=user,
+        email=user.email,
+        primary=True,
+        verified=verified,
+    )
+    return user
+
+
+def test_verified_user_can_obtain_token():
+    # FR-2 positive control for the test below: the token endpoint works.
+    user = _user_with_email(verified=True)
+    response = APIClient().post(
+        TOKEN_URL,
+        {"username": user.username, "password": PASSWORD},
+        format="json",
+    )
+    assert response.status_code == status.HTTP_200_OK
+    assert response.data["token"] == Token.objects.get(user=user).key
+
+
+# Known gap (RR-14): strict, so the suite flags it once the endpoint is fixed.
+@pytest.mark.xfail(
+    strict=True,
+    reason="RR-14: obtain_auth_token does not enforce email verification",
+)
+def test_unverified_user_cannot_obtain_token():
+    # SR-3: email verification is mandatory before login, on every login path.
+    # The token endpoint must not be a way around allauth's verification gate.
+    user = _user_with_email(verified=False)
+    response = APIClient().post(
+        TOKEN_URL,
+        {"username": user.username, "password": PASSWORD},
+        format="json",
+    )
+    assert response.status_code in (
+        status.HTTP_400_BAD_REQUEST,
+        status.HTTP_401_UNAUTHORIZED,
+        status.HTTP_403_FORBIDDEN,
+    )
+    assert "token" not in response.data
+    assert not Token.objects.filter(user=user).exists()

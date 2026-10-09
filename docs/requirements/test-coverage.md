@@ -36,7 +36,7 @@ Excluded: config/scaffold-only requirements (SR-2, SR-10, SR-13–15) and deferr
 | FR-3 delete self | `test_self_delete_flushes_session` | — | ✅ |
 | FR-6 admin = normal user | — | `test_admin_has_no_api_bypass` | ✅ |
 | SR-1 auth required | (authed tests succeed) | `test_anonymous_is_denied` | ✅ |
-| SR-3 email verify before login | — | — | ⚠️ [RR-1](../threat-model/risk-register.md) |
+| SR-3 email verify before login | `test_verified_user_can_obtain_token` (token path) | `test_unverified_user_cannot_obtain_token` (token path, xfail) | ❌ [RR-14](../threat-model/risk-register.md) (token path) · ⚠️ [RR-1](../threat-model/risk-register.md) (allauth flows) |
 | SR-5 function perm incl. view | `test_default_group_*` | `test_missing_view_permission_is_forbidden` | ✅ |
 | SR-6 object ownership | `test_can_retrieve_self` | `test_list_is_scoped_to_self`, `test_cannot_retrieve_another_user`, `test_get_queryset` | ✅ |
 | SR-8 mass-assignment / no escalation | — | `test_cannot_escalate_privilege_via_patch` | ✅ |
