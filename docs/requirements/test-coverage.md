@@ -41,8 +41,13 @@ Excluded: config/scaffold-only requirements (SR-2, SR-10, SR-13–15) and deferr
 | SR-6 object ownership | `test_can_retrieve_self` | `test_list_is_scoped_to_self`, `test_cannot_retrieve_another_user`, `test_get_queryset` | ✅ |
 | SR-8 mass-assignment / no escalation | — | `test_cannot_escalate_privilege_via_patch` | ✅ |
 | SR-9 admin no API bypass | — | `test_admin_has_no_api_bypass` | ✅ |
+| FR-7 export own data | — | — | ❌ not implemented |
+| SR-16 data export | — | — | ❌ not implemented |
+| SR-17 delete removes account + tasks | `test_self_delete_flushes_session` (account only) | — | ❌ task cascade untested |
+| SR-18 strictly-necessary cookies only | — | — | ❌ untested |
 
 ## Status
 
 All in-scope FR/SR for both APIs are covered by positive and negative tests, except the allauth-owned
-signup/verification/session-login flows, accepted as [RR-1](../threat-model/risk-register.md).
+signup/verification/session-login flows, accepted as [RR-1](../threat-model/risk-register.md), and the
+privacy requirements FR-7 and SR-16–18, which are not yet implemented or tested (❌ above).
